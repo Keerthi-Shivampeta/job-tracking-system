@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Register</title>
+		<style>
+			body {
+			    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			    background: linear-gradient(135deg, #4facfe, #00f2fe);
+			    margin: 0;
+			}
+			
+			/* Form Card */
+			.form-container {
+			    width: 350px;
+			    margin: 80px auto;
+			    padding: 30px;
+			    background: rgba(255, 255, 255, 0.95);
+			    border-radius: 15px;
+			    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+			}
+			
+			/* Heading */
+			h2 {
+			    text-align: center;
+			    color: white;
+			    margin-top: 40px;
+			}
+			
+			/* Labels */
+			label {
+			    font-weight: 600;
+			    color: #444;
+			    display: block;
+			    margin-top: 15px;
+			}
+			
+			/* Inputs */
+			input {
+			    width: 100%;
+			    padding: 10px;
+			    margin-top: 6px;
+			    border-radius: 8px;
+			    border: 1px solid #ccc;
+			    outline: none;
+			    transition: 0.3s;
+			}
+			
+			/* Focus effect */
+			input:focus {
+			    border-color: #4facfe;
+			    box-shadow: 0 0 8px rgba(79,172,254,0.4);
+			}
+			
+			/* Button */
+			button {
+			    width: 100%;
+			    padding: 12px;
+			    margin-top: 20px;
+			    background: linear-gradient(135deg, #4facfe, #00c6ff);
+			    color: white;
+			    border: none;
+			    border-radius: 8px;
+			    font-size: 16px;
+			    font-weight: bold;
+			    cursor: pointer;
+			    transition: 0.3s;
+			}
+			
+			button:hover {
+			    transform: translateY(-2px);
+			    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+			}
+			
+			/* Optional Login Link */
+			.login-link {
+			    display: block;
+			    text-align: center;
+			    margin-top: 15px;
+			    color: white;
+			    text-decoration: none;
+			    font-weight: 500;
+			}
+		</style>
+	</head>
+	<body>
+	
+		<h2>Register</h2>
+	
+		<div class="form-container">
+			<form th:action="@{/register}" th:object="${user}" method="post" 
+			onsubmit="return validateEmail() && checkPassword()">
+			
+				<label>Email</label>
+					<input type="text" id="email" th:field="*{email}" onblur="validateEmail()" required/>
+					<span id="emailError" style="color:red; font-size:13px;"></span>
+			
+				<label>Password</label>
+					<input type="password" id="password" th:field="*{password}" onblur="checkPassword()" required/>
+					<span id="passwordError" style="color:red; font-size:13px;"></span>
+			
+			    <button type="submit">Register</button>
+			
+			</form>
+		</div>
+	
+			<a href="/login" class="login-link">Already have an account? Login</a>
+	
+			<script>
+				function validateEmail() {
+				    const email = document.getElementById("email").value;
+				    const error = document.getElementById("emailError");
+				
+				    let pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+				
+				    if (email === "") {
+				        error.innerHTML = "Email is required";
+				    } else if (!pattern.test(email)) {
+				        error.innerHTML = "Enter a valid email (example@gmail.com)";
+				        error.style.color = "red";
+				    } else {
+				        error.innerHTML = "Valid Email";
+				        error.style.color = "green";
+				    }
+				}
+				
+				function checkPassword() {
+				    const password = document.getElementById("password").value;
+				    const error = document.getElementById("passwordError");
+				
+				    if (password === "") {
+				        error.innerHTML = "Password is required";
+				        error.style.color = "red";
+				    } else if (password.length < 6) {
+				        error.innerHTML = "Password must be at least 6 characters";
+				        error.style.color = "red";
+				    } else {
+				        error.innerHTML = " Strong Password";
+				        error.style.color = "green";
+				    }
+				}
+			</script>
+	</body>
+</html>

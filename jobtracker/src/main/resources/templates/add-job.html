@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Add Job</title>
+		<style>
+				body {
+				    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+				    background: linear-gradient(135deg, #667eea, #764ba2);
+				    margin: 0;
+				}
+				
+				/* Form Container */
+				.form-container {
+				    width: 420px;
+				    margin: 60px auto;
+				    padding: 30px;
+				    background: rgba(255, 255, 255, 0.95);
+				    border-radius: 15px;
+				    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+				}
+				
+				/* Heading */
+				h2 {
+				    text-align: center;
+				    color: white;
+				    margin-top: 30px;
+				}
+				
+				/* Labels */
+				label {
+				    font-weight: 600;
+				    color: #444;
+				    display: block;
+				    margin-top: 10px;
+				}
+				
+				/* Inputs */
+				input, select {
+				    width: 100%;
+				    padding: 10px;
+				    margin-top: 6px;
+				    border-radius: 8px;
+				    border: 1px solid #ccc;
+				    outline: none;
+				    transition: 0.3s;
+				}
+				
+				/* Focus Effect */
+				input:focus, select:focus {
+				    border-color: #667eea;
+				    box-shadow: 0 0 8px rgba(102,126,234,0.4);
+				}
+				
+				/* Button */
+				button {
+				    width: 100%;
+				    padding: 12px;
+				    margin-top: 20px;
+				    background: linear-gradient(135deg, #667eea, #764ba2);
+				    color: white;
+				    border: none;
+				    border-radius: 8px;
+				    font-size: 16px;
+				    font-weight: bold;
+				    cursor: pointer;
+				    transition: 0.3s;
+				}
+				
+				button:hover {
+				    transform: translateY(-2px);
+				    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+				}
+				
+				/* Error Messages */
+				span {
+				    font-size: 13px;
+				    color: red;
+				}
+				
+				/* Back Link */
+				.back-link {
+				    display: block;
+				    text-align: center;
+				    margin-top: 15px;
+				    color: white;
+				    text-decoration: none;
+				    font-weight: 500;
+				}
+			</style>
+	</head>
+
+	<body>
+
+		<h2>Add Job</h2>
+
+		<div class="form-container">
+		<form th:action="@{/saveJob}" th:object="${job}" method="post">
+
+		    <input type="hidden" th:field="*{id}" />
+		
+		    <label>Company</label>
+			    <input type="text" th:field="*{companyname}" />
+			    <span th:if="${#fields.hasErrors('companyname')}" 
+			    	th:errors="*{companyname}"></span>
+		
+		    <label>Role</label>
+			    <input type="text" th:field="*{role}" />
+			    <span th:if="${#fields.hasErrors('role')}" 
+			    	th:errors="*{role}"></span>
+			
+		    <label>Status</label>
+			    <select th:field="*{status}">
+			        <option value="">--Select Status--</option>
+			        <option th:each="s : ${statuses}" th:value="${s}" 
+			        	th:text="${s}"></option>
+			    </select>
+			    <span th:if="${#fields.hasErrors('status')}" 
+			    	th:errors="*{status}"></span>
+		
+		    <label>Applied Date</label>
+			    <input type="date" th:field="*{applieddate}" required />
+			    <span th:if="${#fields.hasErrors('applieddate')}" 
+			    	th:errors="*{applieddate}"></span>
+			
+		    <label>ATS Score</label>
+			    <input type="number" th:field="*{atsScore}" />
+			    <span th:if="${#fields.hasErrors('atsScore')}" 
+			    	th:errors="*{atsScore}"></span>
+		
+		    <label>Follow Up Date</label>
+			    <input type="date" th:field="*{followupdate}" required />
+			    <span th:if="${#fields.hasErrors('followupdate')}"
+			    	 th:errors="*{followupdate}"></span>
+		
+		    <button type="submit">Save Job</button>
+
+		</form>
+	</div>
+
+		<a href="/jobs" class="back-link">⬅ Back to Jobs</a>
+
+	</body>
+</html>

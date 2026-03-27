@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Job List</title>
+		<style>
+			body {
+			    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+			    background: linear-gradient(135deg, #667eea, #764ba2);
+			    margin: 0;
+			    padding: 0;
+			    color: #333;
+			}
+			
+			/* Top Navigation */
+			.navbar {
+			    display: flex;
+			    justify-content: space-between;
+			    padding: 15px 40px;
+			    background: rgba(255, 255, 255, 0.95);
+			    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+			}
+			
+			.navbar a {
+			    text-decoration: none;
+			    color: white;
+			    background: linear-gradient(135deg, #667eea, #764ba2);
+			    padding: 8px 15px;
+			    border-radius: 6px;
+			    margin-left: 10px;
+			    font-weight: 500;
+			    transition: 0.3s;
+			}
+			
+			.navbar a:hover {
+			    transform: translateY(-2px);
+			    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+			}
+			
+			/* Heading */
+			h2 {
+			    text-align: center;
+			    margin-top: 30px;
+			    color: white;
+			}
+			
+			/* Table Container */
+			.table-container {
+			    width: 90%;
+			    margin: 30px auto;
+			    background: rgba(255, 255, 255, 0.95);
+			    padding: 20px;
+			    border-radius: 12px;
+			    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+			}
+			
+			/* Table Styling */
+			table {
+			    width: 100%;
+			    border-collapse: collapse;
+			    overflow: hidden;
+			    border-radius: 10px;
+			}
+			
+			th {
+			    background: linear-gradient(135deg, #667eea, #764ba2);
+			    color: white;
+			    padding: 12px;
+			    text-align: left;
+			}
+			
+			td {
+			    padding: 12px;
+			    border-bottom: 1px solid #ddd;
+			}
+			
+			tr:hover {
+			    background-color: #f1f5ff;
+			    transition: 0.2s;
+			}
+			
+			/* Action Links */
+			td a {
+			    text-decoration: none;
+			    padding: 6px 12px;
+			    border-radius: 5px;
+			    font-size: 14px;
+			    color: white;
+			}
+			
+			/* Edit Button */
+			td a:first-child {
+			    background-color: #28a745;
+			}
+			
+			/* Delete Button */
+			td a:last-child {
+			    background-color: #dc3545;
+			}
+			
+			td a:hover {
+			    opacity: 0.8;
+			}
+			
+			/* Responsive */
+			@media (max-width: 768px) {
+			    .table-container {
+			        width: 95%;
+			    }
+			
+			    table, thead, tbody, th, td, tr {
+			        font-size: 12px;
+			    }
+			}
+			</style>
+	</head>
+	<body>
+	
+		<div class="navbar">
+			<div>
+				<strong>Job Tracker</strong>
+			</div>
+			<div>
+				<a href="/add-job">Add Job</a> <a href="/logout">Logout</a>
+			</div>
+		</div>
+		
+		<div class="table-container">
+		<h2 style= "color :black">All Jobs</h2>
+	
+		<table border="1">
+			<tr>
+				<th>Company</th>
+				<th>Role</th>
+				<th>Status</th>
+				<th>Applied date</th>
+				<th>Ats Score</th>
+				<th>Follow Up Date</th>
+				<th>Edit</th>
+				<th>Delete</th>
+			</tr>
+	
+	
+			<tr th:each="job : ${jobs}">
+				<td th:text="${job.companyname}"></td>
+				<td th:text="${job.role}"></td>
+				<td th:text="${job.status}"></td>
+				<td th:text="${job.applieddate}"></td>
+				<td th:text="${job.atsScore}"></td>
+				<td th:text="${job.followupdate}"></td>
+				<td><a th:href="@{/edit-job/{id}(id=${job.id})}">Edit</a></td>
+				<td><a th:href="@{/delete-job/{id}(id=${job.id})}">Delete</a></td>
+			</tr>
+	
+		</table>
+		</div>
+	
+	</body>
+</html>
